@@ -1,0 +1,23 @@
+{ 
+	"Http":{
+		"Addr":":8080",
+		"TimeOut":10,
+		"Path":"web/picc/",
+		"Secret":"^hi~W0rld$",
+		"Expire":1800
+	},
+	"DB":{
+		"Host":"192.168.2.170",
+		"Port":"5432",
+		"User":"picc",
+		"Passwd":"picc",
+		"DbName":"picc",
+		"Secret":"^hi~W0rld$"
+	},
+	"Redis":{
+		"Addr":"127.0.0.1:6379",
+		"MaxIdle":100,
+		"IdleTimeOut":240,
+		"Passwd":"redis"
+	}
+}
