@@ -1,123 +1,42 @@
 package http_srv
 
 import (
-	"html/template"
+	//"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
-	"strings"
 )
 
-const (
-	UNDERTAKE       string = "ud"
-	VERIFICATION    string = "ve"
-	LOSS            string = "lo"
-	STATISTICS      string = "st"
-	LARGE_AREA_LOSS string = "ll"
-	USER_MANAGEMENT string = "ad"
-	SUBJECT         string = "su"
-	POLICY          string = "pm"
-)
-
-type business_management struct {
-	Undertake    string
-	Verification string
-	Loss         string
+type UserListReq struct {
+	Page  *int
+	Count *int
 }
 
-type statistic_management struct {
-	Statistic string
-	LargeLoss string
-}
-
-type system_management struct {
-	UserManagement string
-	Subject        string
-}
-
-type mine struct {
-	Setting   string
-	Insurance string
-}
-
-type header struct {
-	Name string
-	BM   *business_management
-	SM   *statistic_management
-	SYM  *system_management
-	Mine *mine
-}
-
-type profile struct {
-	Title  string
-	Header *header
-}
-
-func (h *HttpSrv) gen_menu(name string, auth string) *header {
-	head := new(header)
-	head.Name = name
-	if strings.Contains(auth, UNDERTAKE) {
-		head.BM = new(business_management)
-		head.BM.Undertake = UNDERTAKE
+func (h *HttpSrv) check_user_list_req_paramters(paramters *UserListReq) bool {
+	if paramters.Page == nil || paramters.Count == nil {
+		return false
 	}
-	if strings.Contains(auth, VERIFICATION) {
-		if head.BM == nil {
-			head.BM = new(business_management)
+
+	return true
+}
+
+func (h *HttpSrv) handler_user_list(w http.ResponseWriter, r *http.Request) {
+	defer func() {
+		if x := recover(); x != nil {
+			fmt.Fprint(w, EncodeGeneralResponse(HTTP_REP_INTERAL_ERROR))
 		}
-		head.BM.Verification = VERIFICATION
-	}
-	if strings.Contains(auth, LOSS) {
-		if head.BM == nil {
-			head.BM = new(business_management)
-		}
-		head.BM.Loss = LOSS
-	}
+	}()
 
-	if strings.Contains(auth, STATISTICS) {
-		head.SM = new(statistic_management)
-		head.SM.Statistic = STATISTICS
-	}
-	if strings.Contains(auth, LARGE_AREA_LOSS) {
-		if head.SM == nil {
-			head.SM = new(statistic_management)
-		}
-		head.SM.LargeLoss = LARGE_AREA_LOSS
-	}
-
-	if strings.Contains(auth, USER_MANAGEMENT) {
-		head.SYM = new(system_management)
-		head.SYM.UserManagement = USER_MANAGEMENT
-	}
-	if strings.Contains(auth, SUBJECT) {
-		if head.SYM == nil {
-			head.SYM = new(system_management)
-		}
-		head.SYM.Subject = SUBJECT
-	}
-
-	head.Mine = new(mine)
-	head.Mine.Setting = "mine"
-	head.Mine.Insurance = "insurane"
-
-	return head
-}
-
-func (h *HttpSrv) handler_user_profile(w http.ResponseWriter, r *http.Request) {
 	RecordReq(r)
-	token, ok := r.Context().Value(xkey).(JwtAuth)
-	if !ok {
-		http.NotFound(w, r)
+	//r.ParseForm()
+	user_list_req := &UserListReq{}
+	err := unmarshal_json(r, user_list_req)
+	if err != nil {
+		log.Println(err)
 		return
 	}
-	name, err := h.db.GetUserInfo(token.Userid)
-	if err != nil {
-		log.Println(err.Error())
-	}
-	p := profile{Title: name,
-		Header: h.gen_menu(name, token.Auth),
-	}
-	tmpl := template.Must(template.ParseFiles("./web/tmpl/main.html", "./web/tmpl/header.html"))
-	err = tmpl.Execute(w, p)
-	if err != nil {
-		panic(err)
+	if !h.check_user_list_req_paramters(user_list_req) {
+		marshal_json(w, &GeneralResponse{Code: int(HTTP_REP_LACK_PARAMETER), Desc: HTTP_REP_LACK_PARAMETER.Desc()})
+		return
 	}
 }

@@ -1,7 +1,6 @@
 package http_srv
 
 import (
-	//"encoding/json"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
@@ -21,6 +20,8 @@ func (h *HttpSrv) init_user_api(r *mux.Router) {
 	s.HandleFunc("/login", h.handler_user_login)
 	s.HandleFunc("/logout", h.handler_user_logout)
 	s.HandleFunc("/profile", h.validate(h.handler_user_profile))
+	s.HandleFunc("/list", h.handler_user_list)
+	s.HandleFunc("/show_panel", h.handler_user_show_panel)
 }
 
 func (h *HttpSrv) gen_jwt_token(auth string, id string) (string, error) {
@@ -72,7 +73,7 @@ func (h *HttpSrv) handler_user_login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	auth, id, err := h.db.ValidUser(user, passwd)
+	auth, id, err := h.db.UserValid(user, passwd)
 	if err != nil {
 		log.Println(err.Error())
 		return

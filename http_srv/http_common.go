@@ -1,10 +1,13 @@
 package http_srv
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
+	"html/template"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/httputil"
@@ -55,6 +58,22 @@ func RecordReq(r *http.Request) {
 	log.Println(string(v))
 }
 
+func (h *HttpSrv) show_panel(panel string) http.HandlerFunc {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer func() {
+			if x := recover(); x != nil {
+				fmt.Fprint(w, EncodeGeneralResponse(HTTP_REP_INTERAL_ERROR))
+			}
+		}()
+
+		RecordReq(r)
+		tmpl := template.Must(template.ParseFiles(panel))
+
+		tmpl.Execute(w, nil)
+
+	})
+}
+
 func (h *HttpSrv) validate(page http.HandlerFunc) http.HandlerFunc {
 
 	return http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
@@ -82,4 +101,24 @@ func (h *HttpSrv) validate(page http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 	})
+}
+
+// MarshalJson 把对象以json格式放到response中
+func marshal_json(w http.ResponseWriter, v interface{}) error {
+	data, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	fmt.Fprint(w, string(data))
+	return nil
+}
+
+// UnMarshalJson 从request中取出对象
+func unmarshal_json(req *http.Request, v interface{}) error {
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		return err
+	}
+	json.Unmarshal([]byte(bytes.NewBuffer(result).String()), v)
+	return nil
 }
