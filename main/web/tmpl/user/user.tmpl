@@ -1,55 +1,73 @@
-<div class="main">
-	<div class="row no-margin-lr clearfix">
-		<div class="col-xs-9">
-			<form id="queryForm" class="form-nb" action="/api/user/show_panel" novalidate="novalidate" method="post">
-				<div class="row no-margin-lr clearfix">
-					<div class="col-xs-6">
-						<div class="form-group">
-							<div class="row">
-								<label class="col-xs-3 control-label no-pad">姓名 :</label>
-								<div class="col-xs-9 no-pad">
-									<input type="text" name="name" value="{{.SearchName}}" class="form-control" placeholder="请输入姓名">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>user</title>
+	<link rel="stylesheet" type="text/css" href="lib/bootsrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="lib/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/index.min.css">
+	<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	 crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+	 crossorigin="anonymous"></script> -->
+</head>
+<body>
+	<div class="main">
+		<div class="row no-margin-lr clearfix">
+			<div class="col-xs-9">
+				<form id="queryForm" class="form-nb" action="/web/user/show_panel" novalidate="novalidate" method="post">
+					<div class="row no-margin-lr clearfix">
+						<div class="col-xs-6">
+							<div class="form-group">
+								<div class="row">
+									<label class="col-xs-3 control-label no-pad">姓名 :</label>
+									<div class="col-xs-9 no-pad">
+										<input type="text" name="name" value="{{.SearchName}}" class="form-control" placeholder="请输入姓名">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<label class="col-xs-3 control-label no-pad">身份证号 :</label>
+									<div class="col-xs-9 no-pad">
+										<input type="text" name="id" value="{{.SearchID}}" class="form-control" placeholder="请输入员工号">
+									</div>
 								</div>
 							</div>
 						</div>
-						<div class="form-group">
-							<div class="row">
-								<label class="col-xs-3 control-label no-pad">身份证号 :</label>
-								<div class="col-xs-9 no-pad">
-									<input type="text" name="id"  value="{{.SearchID}}" class="form-control" placeholder="请输入员工号">
+						<div class="col-xs-6">
+							<div class="form-group">
+								<div class="row">
+									<label class="col-xs-3 control-label no-pad">电话 :</label>
+									<div class="col-xs-9 no-pad">
+										<input type="text" name="tel" value="{{.SearchTel}}" class="form-control" placeholder="请输入员工号">
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<div class="row">
-								<label class="col-xs-3 control-label no-pad">电话 :</label>
-								<div class="col-xs-9 no-pad">
-									<input type="text" name="tel" value="{{.SearchTel}}" class="form-control" placeholder="请输入员工号">
+							<div class="form-group">
+								<div class="row">
+									<label class="col-xs-3 control-label no-pad"></label>
+									<div class="col-xs-9 no-pad">
+										<input type="hidden" name="page_index" value="1">
+										<button type="submit" class="btn btn-primary retrievalBtn">检索</button>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-6">
-						<div class="form-group">
-							<div class="row">
-								<label class="col-xs-3 control-label no-pad"></label>
-								<div class="col-xs-9 no-pad">
-									<input type="hidden" name="page_index" value="1">
-									<button type="submit" class="btn btn-primary retrievalBtn">检索</button>
-								</div>
-							</div>
-						</div>
-					</div>
+				</form>
+			</div>
+			<div class="col-xs-3" style="text-align: center;">
+				<div class="add-policy clearfix">
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#user_dlg_add">
+						添加员工
+					</button>
 				</div>
-			</form>
-		</div>
-		<div class="col-xs-3 pull-right" style="text-align: center;">
-			<div class="add-policy clearfix">
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".user-add">
-					添加员工
-				</button>
 			</div>
 		</div>
+	</div>
+
+	<div class="main clearfix hebao-retrievalResult">
 		<div class="col-xs-12 clearfix">
 
 			<table class="table table-bordered table-striped table-hover mt26 table-picc cbxx">
@@ -86,15 +104,24 @@
 			</table>
 			<div class="tabel-page clearfix">
 				<p class="total-page pull-left">每页显示
-				<span class="num">
-					{{.PageSize}}
-				</span>条，共
-				<span class="num">
-					{{.Total}}
-				</span>条</p>
+					<span class="num">
+						{{.PageSize}}
+					</span>条，共
+					<span class="num">
+						{{.Total}}
+					</span>条</p>
 			</div>
 		</div>
-
-
 	</div>
-</div>
+
+
+	<script type="text/javascript" src="lib/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="lib/bootsrap/js/bootstrap.min.js"></script>
+	<!-- districtPicker -->
+	<script type="text/javascript" src="js/districtPicker/area.js"></script>
+	<script type="text/javascript" src="js/districtPicker/areaData.js"></script>
+	<script type="text/javascript" src="js/districtPicker/index.js"></script>
+	<!--end districtPicker -->
+	{{template "user_dlg_add" }}
+</body>
+</html>

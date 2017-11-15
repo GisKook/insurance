@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	SQL_GET_USERS        string = "select name , id, tel, prov, city, county from picc_user where 1=1 %s limit $1 offset $2"
+	SQL_GET_USERS        string = "select name, id, tel, prov, city, county from picc_user where 1=1 %s order by create_time desc limit $1 offset $2"
 	TABLE_USERS_COL_NAME string = "name"
 	TABLE_USERS_COL_ID   string = "id"
 	TABLE_USERS_COL_TEL  string = "tel"

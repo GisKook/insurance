@@ -61,7 +61,7 @@ func (h *HttpSrv) handler_user_show_panel(w http.ResponseWriter, r *http.Request
 	r.ParseForm()
 	defer r.Body.Close()
 
-	tmpl := template.Must(template.ParseFiles("./web/tmpl/user/user.tmpl"))
+	tmpl := template.Must(template.ParseFiles("./web/tmpl/user/user.tmpl","./web/tmpl/user/user_dlg_add.tmpl"))
 
 	name := r.Form.Get(HTTP_NAME)
 	id := r.Form.Get(HTTP_ID)

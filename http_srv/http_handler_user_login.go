@@ -22,6 +22,7 @@ func (h *HttpSrv) init_user_api(r *mux.Router) {
 	s.HandleFunc("/profile", h.validate(h.handler_user_profile))
 	s.HandleFunc("/list", h.handler_user_list)
 	s.HandleFunc("/show_panel", h.handler_user_show_panel)
+	s.HandleFunc("/add", h.handler_user_add)
 }
 
 func (h *HttpSrv) gen_jwt_token(auth string, id string) (string, error) {
@@ -48,7 +49,7 @@ func (h *HttpSrv) set_token(res http.ResponseWriter, req *http.Request, auth str
 	cookie := http.Cookie{Name: "Auth", Value: token, Expires: exp_cookie_time, HttpOnly: true}
 	http.SetCookie(res, &cookie)
 
-	http.Redirect(res, req, "/api/user/profile", 307)
+	http.Redirect(res, req, "/web/user/profile", 307)
 
 	return nil
 }

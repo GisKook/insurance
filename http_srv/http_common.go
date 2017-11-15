@@ -49,6 +49,17 @@ func EncodeGeneralResponse(code Code) string {
 	return string(resp)
 }
 
+func EncodeErrResponse(code int, desc string) string{
+	gr := &GeneralResponse{
+		Code:code,
+		Desc:desc,
+	}
+
+	resp, _ := json.Marshal(gr)
+
+	return string(resp)
+}
+
 func RecordReq(r *http.Request) {
 	v, e := httputil.DumpRequest(r, true)
 	if e != nil {

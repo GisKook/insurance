@@ -7,8 +7,8 @@
 		"Expire":1800
 	},
 	"DB":{
-		"Host":"192.168.2.170",
-		"Port":"5432",
+		"Host":"222.222.218.51",
+		"Port":"5372",
 		"User":"picc",
 		"Passwd":"picc",
 		"DbName":"picc",

@@ -20,4 +20,8 @@ type User struct {
 	Prov   string
 	City   string
 	County string
+
+	Passwd string
+	PostCode string
+	Roles []int
 }
