@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>user</title>
+	<link rel="stylesheet" type="text/css" href="lib/bootsrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="lib/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/index.min.css">
+</head>
+
+<body>
+	<div class="container">
+		<form id="insurance_form_main">
+			<div class="panel panel-default">
+				<div class="panel-heading">投保人</div>
+				<div class="panel-body">
+					{{template "insured"}}
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">被投保人</div>
+				<div class="panel-body">
+					{{template "insured"}}
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">基本信息</div>
+				<div class="panel-body">
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">投保人与被保险人关系
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="#">本人</a>
+							</li>
+							<li>
+								<a href="#">村民与村委</a>
+							</li>
+						</ul>
+					</div>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">投保方式
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="#">个人投保</a>
+							</li>
+							<li>
+								<a href="#">团体投保</a>
+							</li>
+						</ul>
+						<input type="text" name="households" class="form-control" placeholder="户数">
+					</div>
+
+				</div>
+			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading clearfix">
+					<h4 class="panel-title pull-left" style="padding-top: 7.5px;">标的详情</h4>
+					<div class="input-group-btn">
+						<button class="btn btn-primary pull-right" data-target="#">
+							<i class="glyphicon glyphicon-plus	"></i>
+						</button>
+					</div>
+				</div>
+				<div class="panel-body">
+
+				</div>
+			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading clearfix">
+					<h4 class="panel-title pull-left" style="padding-top: 7.5px;">保费</h4>
+				</div>
+				<div class="panel-body">
+					<div class="form-group">
+						<label for="comment">保险金额:</label>
+						<label for="comment">2000</label>
+						<label for="comment">保费:</label>
+						<label for="comment">2000</label>
+						<label for="comment">自付部分:</label>
+						<label for="comment">2000</label>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading clearfix">
+					<h4 class="panel-title pull-left" stlye="padding-top: 7.5px;">争议处理方式</h4>
+				</div>
+				<div class="panel-body">
+					<div class="radio-inline">
+						<label>
+							<input type="radio" id="radio-litigation" name="value" value="-1" />诉讼</label>
+					</div>
+					<div class="radio-inline">
+						<label>
+							<input type="radio" id="radio-arbitration" name="value" value="value1" />提交仲裁委员会
+						</label>
+					</div>
+				</div>
+			</div>
+		</form>
+		<button type="button" class="btn btn-primary">提交</button>
+	</div>
+</body>
+</html>

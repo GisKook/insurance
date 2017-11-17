@@ -30,7 +30,8 @@ func NewHttpSrv(conf *conf.Conf) *HttpSrv {
 
 func (h *HttpSrv) Start() {
 	s := h.router.PathPrefix("/web").Subrouter()
-	h.init_user_api(s)
+	h.init_web_user(s)
+	h.init_web_insurance(s)
 
 	h.router.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir(h.conf.Http.Path))))
 

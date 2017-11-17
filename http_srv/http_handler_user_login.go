@@ -15,7 +15,7 @@ type JwtAuth struct {
 	jwt.StandardClaims
 }
 
-func (h *HttpSrv) init_user_api(r *mux.Router) {
+func (h *HttpSrv) init_web_user(r *mux.Router) {
 	s := r.PathPrefix("/user").Subrouter()
 	s.HandleFunc("/login", h.handler_user_login)
 	s.HandleFunc("/logout", h.handler_user_logout)
