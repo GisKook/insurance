@@ -25,3 +25,9 @@ type User struct {
 	PostCode string
 	Roles []int
 }
+
+
+type Subject struct{
+	Name string
+	Cols []string
+}

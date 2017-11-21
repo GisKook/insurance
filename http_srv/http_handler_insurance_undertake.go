@@ -19,7 +19,7 @@ func (h *HttpSrv) handler_insurance_undertake(w http.ResponseWriter, r *http.Req
 	r.ParseForm()
 	defer r.Body.Close()
 
-	tmpl := template.Must(template.ParseFiles("./web/tmpl/insurance/insurance.tmpl","./web/tmpl/insurance/insured.tmpl"))
+	tmpl := template.Must(template.ParseFiles("./web/tmpl/insurance/insurance.tmpl","./web/tmpl/insurance/insurance_insured.tmpl"))
 
 	err := tmpl.Execute(w,nil) 
 	panic(err)

@@ -6,6 +6,7 @@ import (
 
 const (
 	TABLE_USER                 string = "picc_user"
+	TABLE_SUBJECT string = "picc_subject_attr"
 	SQL_WHERE_CLAUSE_EQ_STRING string = "and %s='%s'"
 )
 

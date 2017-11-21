@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>user</title>
+	<link rel="stylesheet" type="text/css" href="lib/bootsrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="lib/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/index.min.css">
+	<script type="text/javascript" src="lib/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="lib/bootsrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<div class="main">
+		<div class="row no-margin-lr clearfix">
+			<div class="col-xs-9">
+				<form id="queryForm" class="form-nb" action="/web/insurance/subject" novalidate="novalidate" method="post">
+					<div class="row no-margin-lr clearfix">
+						<div class="col-xs-6">
+							<div class="form-group">
+								<div class="row">
+									<label class="col-xs-3 control-label no-pad">标的名称:</label>
+									<div class="col-xs-9 no-pad">
+										<input type="text" name="name" value="{{.SearchName}}" class="form-control" placeholder="标的名称">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-6">
+							<div class="form-group">
+								<div class="row">
+									<label class="col-xs-3 control-label no-pad"></label>
+									<div class="col-xs-9 no-pad">
+										<input type="hidden" name="page_index" value="1">
+										<button type="submit" class="btn btn-primary retrievalBtn">检索</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="main clearfix hebao-retrievalResult">
+		<div class="col-xs-12 clearfix">
+			<div class="panel panel-primary">
+				<div class="panel-heading clearfix">
+					<h4 class="panel-title pull-left" style="padding-top: 7.5px;">标的详情</h4>
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#insurance_subject_dlg_add">
+							<i class="glyphicon glyphicon-plus	"></i>
+						</button>
+					</div>
+				</div>
+				<div class="panel-body">
+					{{range $subject_index, $subject_value := .Subject}}
+					<div class="panel-group">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" href="#collapse{{$subject_index}}">{{.Name}}</a>
+								</h4>
+							</div>
+							<div id="collapse{{$subject_index}}" class="panel-collapse collapse">
+								<div class="panel-body">
+										<!--todo  https://stackoverflow.com/questions/22390272/how-to-create-a-label-with-close-icon-in-bootstrap -->
+									{{range $index, $value := .Cols}}
+									<span class="tag label label-info">
+										<span>{{$value}}</span>
+										<a>
+											<i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i>
+										</a>
+									</span>
+									{{end}}
+									<div class="input-group-btn">
+										<button class="btn btn-primary pull-left" data-target="#">
+											<i class="glyphicon glyphicon-plus"></i>
+										</button>
+									</div>
+								</div>
+								<div class="panel-footer">Panel Footer</div>
+							</div>
+						</div>
+					</div>
+					{{end}}
+				</div>
+			</div>
+			<div class="tabel-page clearfix">
+				<p class="total-page pull-left">每页显示
+					<span class="num">
+						{{.PageSize}}
+					</span>条，共
+					<span class="num">
+						{{.Total}}
+					</span>条</p>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- districtPicker -->
+	<script type="text/javascript" src="js/districtPicker/area.js"></script>
+	<script type="text/javascript" src="js/districtPicker/areaData.js"></script>
+	<script type="text/javascript" src="js/districtPicker/index.js"></script>
+	<!--end districtPicker -->
+	{{template "insurance_subject_dlg_add" }}
+</body>
+</html>
